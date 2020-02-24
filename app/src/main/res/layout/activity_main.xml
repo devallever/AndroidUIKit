@@ -15,11 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cccccc">
+
             <com.allever.lib.ui.searchview.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp" />
         </FrameLayout>
 
 
@@ -27,29 +28,36 @@
             android:id="@+id/autoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#66ff0000"/>
+            android:background="#66ff0000" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#cccccc">
+            android:background="#cccccc"
+            android:orientation="horizontal">
 
             <com.allever.lib.ui.circleimageview.CircleImageView2
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/ui_test_src"
+                android:layout_margin="10dp"
                 android:scaleType="centerCrop"
-                android:layout_margin="10dp"/>
+                android:src="@drawable/ui_test_src" />
 
             <com.allever.lib.ui.circleimageview.CircleImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/ui_test_src"
+                android:layout_margin="10dp"
                 android:scaleType="centerCrop"
-                android:layout_margin="10dp"/>
+                android:src="@drawable/ui_test_src" />
+
+
         </LinearLayout>
 
+        <com.allever.app.ui.widget.linechartview.LineChartView
+            android:background="#000000"
+            android:id="@+id/lineCharView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
 
     </LinearLayout>
 
