@@ -1,0 +1,5 @@
+include ':app'
+rootProject.name='AndroidUIKit'
+
+include ':common'
+project(':common').projectDir = new File(settingsDir, '../AndroidDependencyLib/common')
