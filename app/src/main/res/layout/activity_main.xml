@@ -15,12 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cccccc">
-            <com.allever.lib.ui.widget.SearchView
+            <com.allever.lib.ui.searchview.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"/>
         </FrameLayout>
+
+
+        <com.allever.lib.ui.autolayout.AutoLayout
+            android:id="@+id/autoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#66ff0000"/>
+
+
 
     </LinearLayout>
 

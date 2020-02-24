@@ -1,4 +1,4 @@
-package com.allever.lib.ui.widget;
+package com.allever.lib.ui.searchview;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
