@@ -1,4 +1,4 @@
-include ':app', ':searchview', ':autolayout', ':circleimageview', ':uikit', ':tickview'
+include ':app', ':searchview', ':autolayout', ':circleimageview', ':uikit', ':tickview', ':checkview'
 rootProject.name='AndroidUIKit'
 
 include ':common'

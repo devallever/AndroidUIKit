@@ -5,6 +5,7 @@ import android.graphics.PointF
 import android.os.Bundle
 import com.allever.app.ui.widget.linechartview.LineDataSet
 import com.allever.lib.common.app.BaseActivity
+import com.allever.lib.common.util.log
 import com.allever.lib.common.util.toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
@@ -35,6 +36,18 @@ class MainActivity : BaseActivity() {
 //        lineCharView.setxNameDataList()
 
         initData()
+
+        checkView.setOnClickListener {
+            checkView.isChecked = !checkView.isChecked
+        }
+
+        checkView.post {
+            log("checkView measureWidth = ${checkView.measuredWidth}")
+            log("checkView measureHeight = ${checkView.measuredHeight}")
+
+            log("checkView Width = ${checkView.width}")
+            log("checkView Height = ${checkView.height}")
+        }
     }
 
     private fun initData() {

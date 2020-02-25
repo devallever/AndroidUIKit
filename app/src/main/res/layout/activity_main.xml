@@ -61,11 +61,28 @@
 
         </LinearLayout>
 
+
         <com.allever.app.ui.widget.linechartview.LineChartView
             android:background="#000000"
             android:id="@+id/lineCharView"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cccccc"
+            android:orientation="horizontal">
+
+            <com.allever.lib.ui.checkview.CheckView
+                android:id="@+id/checkView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="0dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
