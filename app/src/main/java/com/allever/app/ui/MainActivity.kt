@@ -37,9 +37,14 @@ class MainActivity : BaseActivity() {
 
         initData()
 
-        checkView.setOnClickListener {
-            checkView.isChecked = !checkView.isChecked
+//        checkView.setOnClickListener {
+//            checkView.isChecked = !checkView.isChecked
+//        }
+
+        checkView.setOnCheckChangerListener { view, checked ->
+            log("check = $checked")
         }
+
 
         checkView.post {
             log("checkView measureWidth = ${checkView.measuredWidth}")

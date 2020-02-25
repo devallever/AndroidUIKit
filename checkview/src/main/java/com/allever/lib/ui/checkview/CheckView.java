@@ -2,7 +2,6 @@ package com.allever.lib.ui.checkview;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.Nullable;
@@ -39,16 +37,6 @@ public class CheckView extends View {
      */
     private int mPadding = DEFAULT_PADDING;
 
-//    private int mPaddingLeft = DEFAULT_PADDING;
-//    private int mPaddingTop = DEFAULT_PADDING;
-//    private int mPaddingRight = DEFAULT_PADDING;
-//    private int mPaddingBottom = DEFAULT_PADDING;
-
-    private int mMarginLeft = 0;
-    private int mMarginTop = 0;
-    private int mMarginRight = 0;
-    private int mMarginBottom = 0;
-
     private boolean mIsAnimationRunning = false;
     private boolean mChecked = false;
 
@@ -68,6 +56,8 @@ public class CheckView extends View {
 
     private int circleProgress;
     private int innerCircleRadius;
+
+    private CheckChangedListener mListener;
 
     public CheckView(Context context) {
         this(context, null);
@@ -95,6 +85,16 @@ public class CheckView extends View {
         mCircleRectF = new RectF();
 
         mRadius = (DEFAULT_SIZE - mPadding) / 2 - DisplayUtils.INSTANCE.dip2px(2);
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    setChecked(!mChecked);
+                    mListener.onChanged(CheckView.this, mChecked);
+                }
+            }
+        });
     }
 
     private void initAnimator() {
@@ -160,12 +160,6 @@ public class CheckView extends View {
             mPadding = DEFAULT_PADDING;
         }
 
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-        mMarginLeft = layoutParams.leftMargin;
-        mMarginTop = layoutParams.topMargin;
-        mMarginRight = layoutParams.rightMargin;
-        mMarginBottom = layoutParams.bottomMargin;
-
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -221,6 +215,11 @@ public class CheckView extends View {
         mTickPath.lineTo(mTickEndPoint.x, mTickEndPoint.y);
 
         setMeasuredDimension(size, size);
+    }
+
+
+    public void setOnCheckChangerListener(CheckChangedListener listener) {
+        mListener = listener;
     }
 
     /**
