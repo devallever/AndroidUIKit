@@ -3,6 +3,7 @@ package com.allever.lib.ui.checkview;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -57,6 +58,9 @@ public class CheckView extends View {
     private int circleProgress;
     private int innerCircleRadius;
 
+    private int mCheckedColor;
+    private int mHintColor;
+
     private CheckChangedListener mListener;
 
     public CheckView(Context context) {
@@ -69,6 +73,12 @@ public class CheckView extends View {
 
     public CheckView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CheckView);
+        mCheckedColor = typedArray.getColor(R.styleable.CheckView_cv_checked_color, Color.RED);
+        mHintColor = typedArray.getColor(R.styleable.CheckView_cv_hint_color, Color.GRAY);
+        typedArray.recycle();
+
         init();
         initAnimator();
     }
@@ -115,13 +125,11 @@ public class CheckView extends View {
         log("onDraw");
 
         if (!mChecked) {
-
             //画圆圈
-            drawCircle(canvas);
+            drawHintCircle(canvas);
             //画沟
-            drawTick(canvas, Color.GRAY);
+            drawTick(canvas, mHintColor);
             return;
-
         }
 
         //画圆形进度
@@ -238,6 +246,13 @@ public class CheckView extends View {
         return mChecked;
     }
 
+    public void setCheckedColor(int color) {
+        mCheckedColor = color;
+    }
+
+    public void setHintColor(int color) {
+        mHintColor = color;
+    }
 
     /**
      * 重置
@@ -251,10 +266,10 @@ public class CheckView extends View {
         invalidate();
     }
 
-    private void drawCircle(Canvas canvas) {
+    private void drawHintCircle(Canvas canvas) {
         mPaint.reset();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.GRAY);
+        mPaint.setColor(mHintColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(DisplayUtils.INSTANCE.dip2px(2));
         canvas.drawCircle(mCircleX, mCircleY, mRadius, mPaint);
@@ -263,7 +278,7 @@ public class CheckView extends View {
     private void drawOuterCircle(Canvas canvas) {
         mPaint.reset();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.YELLOW);
+        mPaint.setColor(mCheckedColor);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawCircle(mCircleX, mCircleY, mRadius, mPaint);
     }
@@ -290,7 +305,7 @@ public class CheckView extends View {
     private void drawCircleProgress(Canvas canvas) {
         mPaint.reset();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.YELLOW);
+        mPaint.setColor(mCheckedColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(DisplayUtils.INSTANCE.dip2px(2));

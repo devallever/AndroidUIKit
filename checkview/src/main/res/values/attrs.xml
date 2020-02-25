@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CheckView">
+        <attr name="cv_checked_color" format="color"/>
+        <attr name="cv_hint_color" format="color"/>
+    </declare-styleable>
+</resources>

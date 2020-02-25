@@ -46,6 +46,7 @@ class MainActivity : BaseActivity() {
         }
 
 
+        checkView.setCheckedColor(resources.getColor(R.color.colorAccent))
         checkView.post {
             log("checkView measureWidth = ${checkView.measuredWidth}")
             log("checkView measureHeight = ${checkView.measuredHeight}")
@@ -122,7 +123,6 @@ class MainActivity : BaseActivity() {
         lineCharView.addLineData(mOppositionLineDataSet)
 
 
-
         val powerPoint = mutableListOf<PointF>()
         powerPoint.add(PointF(1f, 100f))
         powerPoint.add(PointF(2f, 140f))
@@ -165,8 +165,8 @@ class MainActivity : BaseActivity() {
         lineCharView.addLineData(mHeartLineDataSet)
 
 
-
-        val tagList = listOf("1:00",
+        val tagList = listOf(
+            "1:00",
             "1:00",
             "1:00",
             "1:00",
@@ -178,7 +178,7 @@ class MainActivity : BaseActivity() {
             "1:00",
             "1:00",
             "1:00"
-            )
+        )
         lineCharView.setxNameDataList(tagList)
     }
 }

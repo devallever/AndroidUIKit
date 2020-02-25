@@ -80,7 +80,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_margin="10dp"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                app:cv_checked_color="@color/colorPrimary"/>
 
         </LinearLayout>
 
