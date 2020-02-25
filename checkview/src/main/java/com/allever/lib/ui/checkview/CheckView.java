@@ -1,6 +1,8 @@
 package com.allever.lib.ui.checkview;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.Nullable;
 
@@ -25,11 +28,11 @@ import com.allever.lib.common.util.log.LogUtils;
  */
 public class CheckView extends View {
 
-    private static final int DEFAULT_SIZE = DisplayUtils.INSTANCE.dip2px(48);
+    private static final int DEFAULT_SIZE = DisplayUtils.INSTANCE.dip2px(36);
     private static final int DEFAULT_WIDTH = DEFAULT_SIZE;
     private static final int DEFAULT_HEIGHT = DEFAULT_SIZE;
 
-    private static final int DEFAULT_PADDING = (DEFAULT_SIZE / 10);
+    private static final int DEFAULT_PADDING = (DEFAULT_SIZE / 6);
 
     /***
      * Padding应该是每个方向一致，设置不同时取最大值
@@ -61,9 +64,10 @@ public class CheckView extends View {
     private int mCircleY;
     private int mRadius;
     private RectF mCircleRectF;
-    private ObjectAnimator mCircleProgressAnimator;
+    private AnimatorSet mAnimatorSet;
 
     private int circleProgress;
+    private int innerCircleRadius;
 
     public CheckView(Context context) {
         this(context, null);
@@ -89,11 +93,55 @@ public class CheckView extends View {
         mTickPath = new Path();
 
         mCircleRectF = new RectF();
+
+        mRadius = (DEFAULT_SIZE - mPadding) / 2 - DisplayUtils.INSTANCE.dip2px(2);
     }
 
     private void initAnimator() {
-        mCircleProgressAnimator = ObjectAnimator.ofInt(this, "circleProgress", 0, 360);
-        mCircleProgressAnimator.setDuration(1000);
+        ObjectAnimator circleProgressAnimator = ObjectAnimator.ofInt(this, "circleProgress", 0, 360);
+        circleProgressAnimator.setDuration(500);
+
+        ObjectAnimator innerCircleAnimator = ObjectAnimator.ofInt(this, "innerCircleRadius", mRadius - DisplayUtils.INSTANCE.dip2px(2), 0);
+        innerCircleAnimator.setDuration(500);
+        innerCircleAnimator.setInterpolator(new DecelerateInterpolator());
+
+        mAnimatorSet = new AnimatorSet();
+        mAnimatorSet.playSequentially(circleProgressAnimator, innerCircleAnimator);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        log("onDraw");
+
+        if (!mChecked) {
+
+            //画圆圈
+            drawCircle(canvas);
+            //画沟
+            drawTick(canvas, Color.GRAY);
+            return;
+
+        }
+
+        //画圆形进度
+        drawCircleProgress(canvas);
+
+        if (circleProgress == 360) {
+            //画外部圆形
+            drawOuterCircle(canvas);
+            //画内部白色圆形
+            drawInnerCircle(canvas);
+        }
+
+        if (innerCircleRadius == 0) {
+            drawTick(canvas, Color.WHITE);
+        }
+
+        if (!mIsAnimationRunning) {
+            mIsAnimationRunning = true;
+            mAnimatorSet.start();
+        }
     }
 
     @Override
@@ -175,34 +223,6 @@ public class CheckView extends View {
         setMeasuredDimension(size, size);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        log("onDraw");
-
-        if (!mChecked) {
-
-            //画圆圈
-            drawCircle(canvas);
-            //画沟
-            drawTick(canvas);
-            return;
-
-        }
-
-        //画圆圈
-        drawCircle(canvas);
-        //画沟
-        drawTick(canvas);
-        //画圆形进度
-        drawCircleProgress(canvas);
-
-        if (!mIsAnimationRunning) {
-            mIsAnimationRunning = true;
-            mCircleProgressAnimator.start();
-        }
-    }
-
     /**
      * 改变状态
      *
@@ -224,8 +244,10 @@ public class CheckView extends View {
      * 重置
      */
     private void reset() {
-        mCircleProgressAnimator.cancel();
+        mAnimatorSet.cancel();
         circleProgress = 0;
+        innerCircleRadius = mRadius - DisplayUtils.INSTANCE.dip2px(2);
+//        log("reset 内圆半径 = " + innerCircleRadius);
         mIsAnimationRunning = false;
         invalidate();
     }
@@ -239,10 +261,27 @@ public class CheckView extends View {
         canvas.drawCircle(mCircleX, mCircleY, mRadius, mPaint);
     }
 
-    private void drawTick(Canvas canvas) {
+    private void drawOuterCircle(Canvas canvas) {
         mPaint.reset();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.GRAY);
+        mPaint.setColor(Color.YELLOW);
+        mPaint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(mCircleX, mCircleY, mRadius, mPaint);
+    }
+
+    private void drawInnerCircle(Canvas canvas) {
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(Color.WHITE);
+        mPaint.setStyle(Paint.Style.FILL);
+//        log("内圆半径 = " + innerCircleRadius);
+        canvas.drawCircle(mCircleX, mCircleY, innerCircleRadius, mPaint);
+    }
+
+    private void drawTick(Canvas canvas, int tickColor) {
+        mPaint.reset();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(tickColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(DisplayUtils.INSTANCE.dip2px(2));
@@ -265,6 +304,15 @@ public class CheckView extends View {
 
     public void setCircleProgress(int circleProgress) {
         this.circleProgress = circleProgress;
+        invalidate();
+    }
+
+    public int getInnerCircleRadius() {
+        return innerCircleRadius;
+    }
+
+    public void setInnerCircleRadius(int innerCircleRadius) {
+        this.innerCircleRadius = innerCircleRadius;
         invalidate();
     }
 
