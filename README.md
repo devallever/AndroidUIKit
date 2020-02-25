@@ -14,3 +14,6 @@
 
 ## SearchView
 封装EditText的搜索栏
+
+## CheckView
+带有小动画的选中控件
