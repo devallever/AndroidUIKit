@@ -51,6 +51,14 @@
                 android:src="@drawable/ui_test_src" />
 
 
+            <com.allever.lib.ui.tickview.TickView
+                android:id="@+id/tick_view_accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:check_base_color="@color/colorAccent"
+                app:rate="normal" />
+
         </LinearLayout>
 
         <com.allever.app.ui.widget.linechartview.LineChartView

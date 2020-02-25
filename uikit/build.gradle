@@ -28,6 +28,7 @@ dependencies {
     api project(path: ':searchview')
     api project(path: ':autolayout')
     api project(path: ':circleimageview')
+    api project(path: ':tickview')
 }
 repositories {
     mavenCentral()
