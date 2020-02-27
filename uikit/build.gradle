@@ -30,6 +30,7 @@ dependencies {
     api project(path: ':circleimageview')
     api project(path: ':tickview')
     api project(path: ':checkview')
+    api project(path: ':widget')
 }
 repositories {
     mavenCentral()
