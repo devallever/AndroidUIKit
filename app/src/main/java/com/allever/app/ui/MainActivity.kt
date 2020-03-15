@@ -7,6 +7,7 @@ import com.allever.app.ui.widget.linechartview.LineDataSet
 import com.allever.lib.common.app.BaseActivity
 import com.allever.lib.common.util.log
 import com.allever.lib.common.util.toast
+import com.allever.lib.ui.widget.ShakeHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
@@ -53,6 +54,15 @@ class MainActivity : BaseActivity() {
 
             log("checkView Width = ${checkView.width}")
             log("checkView Height = ${checkView.height}")
+        }
+
+        shakeImageView.setOnClickListener {
+            shakeImageView.start(false)
+        }
+
+        val animator = ShakeHelper.createShakeAnimator(commonImageView, false)
+        commonImageView.setOnClickListener {
+            animator.start()
         }
     }
 
@@ -180,5 +190,10 @@ class MainActivity : BaseActivity() {
             "1:00"
         )
         lineCharView.setxNameDataList(tagList)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        shakeImageView.stop()
     }
 }

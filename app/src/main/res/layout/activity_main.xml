@@ -14,7 +14,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#cccccc">
+            android:background="#cccccc"
+            android:visibility="gone">
 
             <com.allever.lib.ui.searchview.SearchView
                 android:id="@+id/searchView"
@@ -28,13 +29,15 @@
             android:id="@+id/autoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#66ff0000" />
+            android:background="#66ff0000"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cccccc"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <com.allever.lib.ui.circleimageview.CircleImageView2
                 android:layout_width="80dp"
@@ -91,6 +94,37 @@
                 android:layout_margin="10dp"
                 android:text="AnimationButton"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.allever.lib.ui.widget.ShakeImageView
+                android:id="@+id/shakeImageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_margin="10dp"/>
+
+
+            <ImageView
+                android:id="@+id/commonImageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+
+        <com.allever.app.ui.widget.graph.GraphView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#666666"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 
