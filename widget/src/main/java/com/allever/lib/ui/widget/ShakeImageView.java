@@ -31,17 +31,7 @@ public class ShakeImageView extends AppCompatImageView {
     }
 
     private void init() {
-        mObjectAnimator = ObjectAnimator.ofFloat(this, "rotation",
-                0f, 5f, 0f, -5f, 0f, 7f, 0f, -7f, 0f, 5f, 3f, 0f, 0f, 0f, 0f, 0f, 0f, 0f);
-        mObjectAnimator.setDuration(3000);
-        mObjectAnimator.setInterpolator(new AnticipateOvershootInterpolator());
-        mObjectAnimator.setStartDelay(1000);
-        int repeatCount = 0;
-        if (mLoop) {
-            repeatCount = ValueAnimator.INFINITE;
-            mObjectAnimator.start();
-        }
-        mObjectAnimator.setRepeatCount(repeatCount);
+        mObjectAnimator = ShakeHelper.INSTANCE.createShakeAnimator(this, mLoop);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.allever.lib.ui.checkview;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -14,6 +16,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 
 import com.allever.lib.common.util.DisplayUtils;
@@ -55,7 +58,9 @@ public class CheckView extends View {
     private RectF mCircleRectF;
     private AnimatorSet mAnimatorSet;
 
+    @Keep
     private int circleProgress;
+    @Keep
     private int innerCircleRadius;
 
     private int mCheckedColor;
@@ -99,8 +104,8 @@ public class CheckView extends View {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                setChecked(!mChecked);
                 if (mListener != null) {
-                    setChecked(!mChecked);
                     mListener.onChanged(CheckView.this, mChecked);
                 }
             }
@@ -316,6 +321,7 @@ public class CheckView extends View {
         return circleProgress;
     }
 
+    @Keep
     public void setCircleProgress(int circleProgress) {
         this.circleProgress = circleProgress;
         invalidate();
@@ -325,6 +331,7 @@ public class CheckView extends View {
         return innerCircleRadius;
     }
 
+    @Keep
     public void setInnerCircleRadius(int innerCircleRadius) {
         this.innerCircleRadius = innerCircleRadius;
         invalidate();

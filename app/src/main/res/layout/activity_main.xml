@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cccccc"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.allever.lib.ui.searchview.SearchView
                 android:id="@+id/searchView"
@@ -30,14 +30,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#66ff0000"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#cccccc"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.allever.lib.ui.circleimageview.CircleImageView2
                 android:layout_width="80dp"
@@ -124,7 +124,8 @@
             android:layout_margin="10dp"
             android:background="#666666"
             android:paddingTop="10dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

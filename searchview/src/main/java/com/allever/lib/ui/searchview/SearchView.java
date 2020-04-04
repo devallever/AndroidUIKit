@@ -119,6 +119,10 @@ public class SearchView extends LinearLayout {
         mEditText.setHintTextColor(color);
     }
 
+    public void setHintText(String hintText) {
+        mEditText.setHint(hintText);
+    }
+
     public void setTextColor(int color) {
         mEditText.setTextColor(color);
     }
@@ -130,6 +134,14 @@ public class SearchView extends LinearLayout {
 
     public void setText(String text) {
         mEditText.setText(text);
+    }
+
+    public void setLiftIconVisible(boolean show) {
+        if (show) {
+            mIvSearch.setVisibility(VISIBLE);
+        } else {
+            mIvSearch.setVisibility(GONE);
+        }
     }
 
     public void setSelection(int selection) {
