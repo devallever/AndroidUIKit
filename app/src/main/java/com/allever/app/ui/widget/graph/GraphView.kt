@@ -24,12 +24,19 @@ class GraphView : View {
 
     private var mLineStartX = 0
     private var mLineEndX = 0
+    private var mLineStartY = 0
+    private var mLineEndY = 0
 
     private val screenWidth = DisplayUtils.getScreenWidth().toFloat()
     private val screenHeight = DisplayUtils.getScreenHeight().toFloat()
 
     private var mLineDataList = mutableListOf<LineData>()
     private var mXValueList = mutableListOf<String>()
+
+    private var mLabelXList = mutableListOf<Int>()
+    private var mLabelYList = mutableListOf<Int>()
+
+    private var mMaxYValue = 0f
 
     private var mPaint = Paint()
 
@@ -89,6 +96,7 @@ class GraphView : View {
         drawHLine(canvas)
 
         drawXLabel(canvas)
+        drawYLabel(canvas)
     }
 
     public fun setLineData(data: MutableList<LineData>) {
@@ -116,6 +124,9 @@ class GraphView : View {
         val endX = startX
         val endY = mHeight - mPaddingBottom - DisplayUtils.dip2px(20).toFloat()
         canvas?.drawLine(startX, startY, endX, endY, mPaint)
+
+        mLineStartY = startY.toInt()
+        mLineEndY = endY.toInt()
     }
 
     private fun drawHLine(canvas: Canvas?) {
@@ -127,10 +138,34 @@ class GraphView : View {
         canvas?.drawLine(startX, startY, endX, endY, mPaint)
 
         mLineStartX = startX.toInt()
-        mLineEndX = endY.toInt()
+        mLineEndX = endX.toInt()
     }
 
     private fun drawXLabel(canvas: Canvas?) {
+        mLabelXList.clear()
+        mPaint.textSize = DisplayUtils.sp2px(10).toFloat()
+        val count = mXValueList.size
+        val interval = (mLineEndX - mLineStartX) / (count - 1)
+        log("startX = $mLineStartX endX = $mLineEndX")
+        log("x标签 坐标间隔 = $interval")
+
+        for (i in 0..count - 2) {
+            val x = interval * i + mLineStartX
+            mLabelXList.add(x)
+        }
+        mLabelXList.add(mLineEndX)
+        val y =
+            mHeight - mPaddingBottom - DisplayUtils.dip2px(20).toFloat() + DisplayUtils.sp2px(12)
+        mLabelXList.mapIndexed { index, it ->
+            log("第 $index 个点 x = $it")
+            val x = it.toFloat()
+            val text = mXValueList[index]
+            val centerOffset = mPaint.measureText(text) / 2
+            canvas?.drawText(mXValueList[index], x - centerOffset, y, mPaint)
+        }
+    }
+
+    private fun drawYLabel(canvas: Canvas?) {
 
     }
 
@@ -138,12 +173,24 @@ class GraphView : View {
         log(TAG, msg)
     }
 
+    private fun getMaxYValue(): Float {
+        var maxYValue = 0f
+        mLineDataList.mapIndexed { index, lineData ->
+            lineData.yValue.mapIndexed { j, value ->
+                if (value > maxYValue) {
+                    maxYValue = value
+                }
+            }
+        }
+        return maxYValue
+    }
+
     private fun initTestData() {
         val yValue = mutableListOf<Float>()
         yValue.add(3f)
         yValue.add(5f)
         yValue.add(3f)
-        yValue.add(5f)
+        yValue.add(7f)
         yValue.add(3f)
         yValue.add(5f)
         yValue.add(3f)
@@ -170,6 +217,9 @@ class GraphView : View {
 
         mLineDataList.add(lineData)
         mXValueList.addAll(xValue)
+
+        mMaxYValue = getMaxYValue()
+        log("maxYValue = $mMaxYValue")
 
     }
 
