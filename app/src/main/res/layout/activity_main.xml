@@ -39,14 +39,14 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <com.allever.lib.ui.circleimageview.CircleImageView2
+            <com.allever.lib.ui.circleimageview.CircleImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_margin="10dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ui_test_src" />
 
-            <com.allever.lib.ui.circleimageview.CircleImageView
+            <com.allever.lib.ui.circleimageview.CircleImageView2
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_margin="10dp"
